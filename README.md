@@ -1,16 +1,110 @@
-# React + Vite
+# 🎓 Student Performance Predictor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A machine learning web application that predicts a student's final performance score based on academic and lifestyle-related factors.
 
-Currently, two official plugins are available:
+The project combines a **React frontend**, **FastAPI backend**, and **Scikit-learn machine learning models** to create an end-to-end ML prediction system.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 📌 Project Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The Student Performance Predictor takes the following information from a user:
 
-## Expanding the ESLint configuration
+- Study hours
+- Attendance percentage
+- Previous exam score
+- Sleep hours
+- Assignment completion percentage
+- Extracurricular activity participation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The input is processed and passed to a trained machine learning model, which predicts the student's expected final score.
+
+The project demonstrates the complete machine learning workflow:
+
+**Data → Preprocessing → Training → Evaluation → Model Selection → Prediction → API → Web Interface**
+
+---
+
+## ✨ Features
+
+- 📊 Student performance prediction
+- 🧹 Missing-value handling
+- 🔢 Categorical feature encoding
+- ⚖️ Feature scaling using `StandardScaler`
+- 🤖 Linear Regression model
+- 🌲 Random Forest Regression model
+- 📈 Model evaluation using:
+  - MAE
+  - MSE
+  - RMSE
+  - R² Score
+- 🏆 Automatic selection of the better-performing model
+- 💾 Saved trained model using Joblib
+- ⚡ FastAPI prediction API
+- ⚛️ React + Vite frontend
+- 🔗 Frontend-to-backend integration
+
+---
+
+## 🛠️ Tech Stack
+
+### Machine Learning
+
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- Joblib
+
+### Backend
+
+- FastAPI
+- Uvicorn
+
+### Frontend
+
+- React
+- Vite
+- JavaScript
+- CSS
+
+### Development Tools
+
+- VS Code
+- Git
+- GitHub
+
+---
+
+## 📂 Project Structure
+
+```text
+student-performance-predictor/
+│
+├── data/
+│   └── student_performance.csv
+│
+├── model/
+│   ├── best_model.pkl
+│   ├── scaler.pkl
+│   ├── feature_columns.pkl
+│   └── model_name.pkl
+│
+├── public/
+│
+├── src/
+│   ├── assets/
+│   ├── App.jsx
+│   ├── App.css
+│   ├── index.css
+│   └── main.jsx
+│
+├── generate_dataset.py
+├── train_model.py
+├── predict.py
+├── main.py
+├── requirements.txt
+├── package.json
+├── package-lock.json
+├── vite.config.js
+└── README.md
