@@ -178,12 +178,10 @@ The R² score of **0.706** indicates that the model explains approximately **70.
 
 ## 📸 Screenshots
 
+
 ### Prediction Interface
 
-Add a screenshot of the working React application here.
-
-```text
-Screenshot coming soon
+![Student Performance Predictor](Screenshot/Student-prediction.JPG)
 ```
 
 ---
