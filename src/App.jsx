@@ -21,31 +21,35 @@ function App() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await fetch("http://127.0.0.1:8001/predict", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const response = await fetch("http://127.0.0.1:8000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!response.ok) {
-      throw new Error("Prediction request failed");
+      if (!response.ok) {
+        throw new Error("Prediction request failed");
+      }
+
+      const result = await response.json();
+
+      setPrediction({
+        score: result.predicted_final_score,
+        model: result.model_used,
+      });
+    } catch (error) {
+      console.error(error);
+      setPrediction({
+        error: "Could not connect to the prediction server.",
+      });
     }
+  };
 
-    const result = await response.json();
-
-    setPrediction(
-      `Predicted Final Score: ${result.predicted_final_score}`
-    );
-  } catch (error) {
-    console.error(error);
-    setPrediction("Could not connect to the prediction server.");
-  }
-};
   return (
     <div className="app">
       <div className="container">
@@ -147,9 +151,67 @@ function App() {
         {prediction && (
           <div className="result">
             <h2>Prediction</h2>
-            <p>{prediction}</p>
+
+            {prediction.error ? (
+              <p>{prediction.error}</p>
+            ) : (
+              <>
+                <p>
+                  Predicted Final Score:{" "}
+                  <strong>{prediction.score}</strong>
+                </p>
+
+                <p>
+                  Model Used:{" "}
+                  <strong>{prediction.model}</strong>
+                </p>
+              </>
+            )}
           </div>
         )}
+
+        <div className="comparison">
+          <h2>Model Comparison</h2>
+
+          <p className="comparison-subtitle">
+            Performance on the test dataset (100 samples)
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>From Scratch</th>
+                <th>Scikit-learn</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>MSE</td>
+                <td>30.4688</td>
+                <td>30.2358</td>
+              </tr>
+
+              <tr>
+                <td>RMSE</td>
+                <td>5.5199</td>
+                <td>5.4987</td>
+              </tr>
+
+              <tr>
+                <td>R²</td>
+                <td>0.7392</td>
+                <td>0.7412</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p className="comparison-note">
+            The from-scratch implementation achieves performance very close to
+            the Scikit-learn Linear Regression model on this test split.
+          </p>
+        </div>
       </div>
     </div>
   );
